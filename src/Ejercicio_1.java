@@ -29,5 +29,21 @@ public class Ejercicio_1 {
         System.out.println("¿Es ejecutable?: " + file.canExecute());
         System.out.println("Tamaño: " + file.length() + " bytes");
 
+        try {
+            BasicFileAttributes attrs = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+            FileTime creationTime = attrs.creationTime();
+            FileTime lastModifiedTime = attrs.lastModifiedTime();
+            FileTime lastAccessTime = attrs.lastAccessTime();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+            System.out.println("Fecha de creación: " + sdf.format(creationTime.toMillis()));
+            System.out.println("Última modificación: " + sdf.format(lastModifiedTime.toMillis()));
+            System.out.println("Último acceso: " + sdf.format(lastAccessTime.toMillis()));
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al obtener los atributos del archivo.");
+            System.out.println(e.getMessage());
+        }
+
     }
 }
